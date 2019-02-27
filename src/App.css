@@ -1,3 +1,17 @@
+html {
+  box-sizing: border-box;
+}
+/* inherit border-box on all elements in the universe and before and after
+ */
+*, 
+*:before, 
+*:after {
+  box-sizing: inherit;
+}
+
 .App {
   font-family: 'Open Sans', sans-serif;
+  display: grid;
+  grid-template-rows: 20vh 80vh;
+  grid-template-columns: 1fr 1fr;
 }
