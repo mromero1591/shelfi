@@ -16,6 +16,8 @@ massive(process.env.CONNECTION)
     app.set('db', dbInstance);
 })
 
+//ENDPOINTS
+app.get('/api/products', prodcutController.getAll);
 app.post('/api/products', prodcutController.create);
 
 

@@ -13,5 +13,17 @@ module.exports = {
             console.log('error at create:', err);
             res.status(500).send({errorMessage: 'could not create product'});
         });
+    },
+
+    getAll: function(req, res, next) {
+        const dbInstance = req.app.get('db');
+
+        //get all the itmes from the database.
+        dbInstance.get_products()
+        .then( products => {
+            res.status(200).send(products);
+        }).catch( err => {
+            res.send(500).send({errorMessage: 'could not create product'});
+        });
     }
 }

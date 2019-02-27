@@ -10,7 +10,6 @@ export default class Form extends Component {
       imgInput: '',
       productNameInput: '',
       priceInput: '',
-      placeholderImg: 'http://via.placeholder.com/150'
     }
   }
 
@@ -46,7 +45,7 @@ export default class Form extends Component {
     //add inventory to the database
     Axios.post('/api/products', product)
     .then( res => {
-      console.log(res);
+      this.props.getProducts()
     }).catch( err => {
       console.log(err);
     })
@@ -55,7 +54,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const formImg = this.state.imgInput != '' ? this.state.imgInput : this.state.placeholderImg;
+    const formImg = this.state.imgInput != '' ? this.state.imgInput : this.props.placeholderImg;
     return (
       <section className='form-section'>
         <div className="form">
