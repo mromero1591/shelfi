@@ -1,35 +1,51 @@
 .form-section{
-    grid-column: 2/3;
-    grid-row: 2/3;
 }
 
 .form {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
     background-color: #3AD886;
-    justify-items: center;
-    justify-content: center;
+    height: 520px;
     width: 400px;
-    height: 500px;
+    border-radius: 5px;
+}
+
+.form-content {
+    display: flex;
+    flex-flow: column;
 }
 
 .form-img {
-    grid-row: 1/2;
-    grid-column: 1/3;
+    margin-top: 10px;
+    align-self: center;
+}
+
+.form-img>img {
+    width: 200px;
+}
+
+.form-input-group {
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .form-inputs {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
-    grid-column: 1/3;
+    justify-content: flex-start;
+    padding: 15px;
 }
 
-.form-input {
-    height: 20px;
+.btn-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
 }
 .btn {
-    grid-row: 3/4;
-    height: 20px;
+    margin-left: 20px;
+    background-color: #ED6B5B;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form-submit {
+    margin-right: 20px;
 }

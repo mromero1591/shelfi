@@ -37,9 +37,10 @@ export default class Form extends Component {
   }
 
   addToInventory = () => {
+    const convertedPrice = parseInt(this.state.priceInput);
     const product = {
       name: this.state.productNameInput,
-      price: this.state.priceInput,
+      price: convertedPrice,
       img: this.state.imgInput
     }
     //add inventory to the database
@@ -58,17 +59,29 @@ export default class Form extends Component {
     return (
       <section className='form-section'>
         <div className="form">
-          <img src={formImg} alt='placeholder' className='form-img'/>
-          <div class="form-inputs">
-            <label>Image URL:</label>
-            <input className='form-input' value={this.state.imgInput} onChange={ (e) => {this.handleimgInput(e.target.value)}}/>
-            <label>Name:</label>
-            <input className='form-input' value={this.state.productNameInput} onChange={ (e) => {this.handleNameInput(e.target.value)}}/>
-            <label>Price:</label>
-            <input className='form-input' value={this.state.priceInput} onChange={ (e) => {this.handlePriceInput(e.target.value)}}/>
+          <div className="form-content">
+            <div className="form-img">
+              <img src={formImg} alt='placeholder'/>
+            </div>
+            <div className="form-inputs">
+              <div className='form-input-group'>
+                <label>Image URL:</label>
+                <input className='form-input' value={this.state.imgInput} onChange={ (e) => {this.handleimgInput(e.target.value)}}/>
+              </div>
+              <div className='form-input-group'>
+                <label>Name:</label>
+                <input className='form-input' value={this.state.productNameInput} onChange={ (e) => {this.handleNameInput(e.target.value)}}/>
+              </div>
+              <div className='form-input-group'>
+                <label>Price:</label>
+                <input className='form-input' value={this.state.priceInput} onChange={ (e) => {this.handlePriceInput(e.target.value)}}/>
+              </div>
+            </div>
           </div>
-          <button className='btn' onClick={this.clearForm}>Cancel</button>
-          <button className='btn' onClick={this.addToInventory}>Add to Inventory</button>
+          <div className="btn-container">
+            <button className='btn' onClick={this.clearForm}>Cancel</button>
+            <button className='btn form-submit' onClick={this.addToInventory}>Add to Inventory</button>
+          </div>
         </div>
       </section>
     )

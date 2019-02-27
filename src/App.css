@@ -11,7 +11,10 @@ html {
 
 .App {
   font-family: 'Open Sans', sans-serif;
-  display: grid;
-  grid-template-rows: 20vh 80vh;
-  grid-template-columns: 1fr 1fr;
+}
+
+.main-app-body {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 }
