@@ -1,5 +1,6 @@
 import React from 'react'
 import './Product.css';
+import {Link} from 'react-router-dom'
 
 export default function Product(props) {
   const img_url = props.product.img_url !== '' ? props.product.img_url : props.placeholderImg
@@ -14,7 +15,11 @@ export default function Product(props) {
         </div>
         <div className='product-btn-group'>
           <button className='product-card-btn' onClick={() => {props.delete(props.product.id)}}>Delete</button>
-          <button className='product-card-btn' onClick={ () => {props.edit(props.product)}}>Edit</button>
+          <Link to={{
+            pathname:`/edit/${props.product.id}`,
+            state: {product: props.product}
+          }} ><button className='product-card-btn'>Edit</button> </Link>
+          {/* <button className='product-card-btn' onClick={ () => {props.edit(props.product)}}>Edit</button> */}
         </div>
       </div>
     </div> 

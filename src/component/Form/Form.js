@@ -2,24 +2,35 @@ import React, { Component } from 'react'
 import './Form.css'
 import Axios from 'axios';
 
+
 export default class Form extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      placeholderImg: 'http://via.placeholder.com/150',
       imgInput: '',
       productNameInput: '',
       priceInput: '',
+      editStatus: false
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.location.state) {
+      const {img_url, name, price} = this.props.location.state.product;
+      this.setState({
+        imgInput: img_url,
+        productNameInput: name,
+        priceInput: price,
+        editStatus: true
+      })
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.editproduct !== prevProps.editproduct) {
-      this.setState({
-        productNameInput: this.props.editproduct.name,
-        imgInput: this.props.editproduct.img_url,
-        priceInput: this.props.editproduct.price,
-      })
+    if(this.props.location !== prevProps.location ) {
+      this.clearForm();
     }
   }
 
@@ -42,41 +53,50 @@ export default class Form extends Component {
       imgInput: '',
       productNameInput: '',
       priceInput: '',
-    })
-    if(this.props.edit) {
-      this.props.clearEdit();
-    }
-    
+      editStatus: false
+    })    
   }
 
   addToInventory = () => {
     const convertedPrice = parseInt(this.state.priceInput);
       const product = {
-        id: this.props.editproduct.id,
         name: this.state.productNameInput,
         price: convertedPrice,
         img: this.state.imgInput
     }
+    //add inventory to the database
+    Axios.post('/api/products', product)
+    .then( res => {
+      //clear the form
+      this.clearForm();
+      this.props.history.push('/');
+    }).catch( err => {
+      console.log(err);
+    })
+  }
 
-    if(this.props.edit) {
-      //edit the product.
-      this.props.handleEditProduct(product);
-    } else {
-      //add inventory to the database
-      Axios.post('/api/products', product)
-      .then( res => {
-        this.props.getProducts()
-      }).catch( err => {
-        console.log(err);
-      })
+  editInventory = () => {
+    const id = this.props.match.params.id;
+
+    const updatedProduct = {
+      name: this.state.productNameInput,
+      price: this.state.priceInput,
+      img: this.state.imgInput
     }
-
-    //clear the form
-    this.clearForm();
+    //make an axios call to update the prodcut.
+    Axios.put(`/api/products/${id}`, updatedProduct)
+    .then ( res => {
+      //clear the edited product
+      this.clearForm();
+      this.props.history.push('/');
+      
+    }).catch( err => {
+      console.log(err);
+    })
   }
 
   render() {
-    const formImg = this.state.imgInput != '' ? this.state.imgInput : this.props.placeholderImg;
+    const formImg = this.state.imgInput !== '' ? this.state.imgInput : this.state.placeholderImg;
     return (
       <section className='form-section'>
         <div className="form">
@@ -101,7 +121,7 @@ export default class Form extends Component {
           </div>
           <div className="btn-container">
             <button className='btn' onClick={this.clearForm}>Cancel</button>
-            <button className='btn form-submit' onClick={this.addToInventory}>{this.props.edit ? 'Save Changes' : 'Add to Inventory'}</button>
+            <button className='btn form-submit' onClick={this.state.editStatus ? this.editInventory : this.addToInventory}>{this.state.editStatus ? 'Save Changes' : 'Add to Inventory'}</button>
           </div>
         </div>
       </section>
