@@ -9,8 +9,13 @@ export default function Product(props) {
         <img src={img_url} alt='product'/>
       </div>
       <div className="product-card-desc">
-        <h4>{props.product.name}</h4>
-        <span>${props.product.price}</span>
+        <div>
+          <span>{props.product.name} <br/><span>${props.product.price}</span></span>
+        </div>
+        <div className='product-btn-group'>
+          <button className='product-card-btn' onClick={() => {props.delete(props.product.id)}}>Delete</button>
+          <button className='product-card-btn' onClick={ () => {props.edit(props.product)}}>Edit</button>
+        </div>
       </div>
     </div> 
   )

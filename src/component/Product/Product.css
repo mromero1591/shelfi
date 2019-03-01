@@ -20,4 +20,21 @@
 
 .product-card-desc {
     margin-left: 10px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.product-btn-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.product-card-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #6ED48D;
 }

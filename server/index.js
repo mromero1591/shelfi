@@ -19,7 +19,8 @@ massive(process.env.CONNECTION)
 //ENDPOINTS
 app.get('/api/products', prodcutController.getAll);
 app.post('/api/products', prodcutController.create);
-
+app.delete('/api/products/:id', prodcutController.delete);
+app.put('/api/products/:id', prodcutController.update);
 
 const PORT = process.env.PORT;
 

@@ -11,7 +11,14 @@ class App extends Component {
 
     this.state = {
       placeholderImg: 'http://via.placeholder.com/150',
-      products: []
+      products: [],
+      editProduct: {
+        id: '',
+        name: '',
+        img_url: '',
+        price: ''
+      },
+      editStatus: false
     }
   }
 
@@ -27,6 +34,48 @@ class App extends Component {
       this.setState({products})
     }).catch(err => {
       console.log(err);
+    });
+  }
+
+  deleteProduct = (productId) => {
+    Axios.delete(`/api/products/${productId}`)
+    .then( res => {
+      this.getProducts();
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  editProduct = (product) => {
+    this.setState({
+      editProduct: product,
+      editStatus: true
+    });
+  }
+
+  handleEditProduct = (updatedProduct) => {
+    //make an axios call to update the prodcut.
+    Axios.put(`/api/products/${updatedProduct.id}`, updatedProduct)
+    .then ( res => {
+      //clear the edited product
+      this.getProducts();
+    }).catch( err => {
+      console.log(err);
+    })
+
+  }
+
+  clearEdit = () => {
+    const clearedEditProduct = {
+      id: '',
+      name: '',
+      img_url: '',
+      price: ''
+    }
+
+    this.setState({
+      editProduct: clearedEditProduct,
+      editStatus: false
     })
   }
 
@@ -37,8 +86,8 @@ class App extends Component {
           <Header />
         </header>
         <main className='main-app-body'>
-          <Dashboard products={this.state.products} placeholderImg={this.state.placeholderImg}/>
-          <Form placeholderImg={this.state.placeholderImg} getProducts={this.getProducts}/>
+          <Dashboard products={this.state.products} placeholderImg={this.state.placeholderImg} handleEditProduct={this.editProduct} deleteProduct={this.deleteProduct}/>
+          <Form clearEdit={this.clearEdit} edit={this.state.editStatus} editproduct={this.state.editProduct} placeholderImg={this.state.placeholderImg} getProducts={this.getProducts} handleEditProduct={this.handleEditProduct}/>
         </main>
       </div>
     );

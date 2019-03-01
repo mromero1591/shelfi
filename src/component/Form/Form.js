@@ -13,6 +13,16 @@ export default class Form extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.editproduct !== prevProps.editproduct) {
+      this.setState({
+        productNameInput: this.props.editproduct.name,
+        imgInput: this.props.editproduct.img_url,
+        priceInput: this.props.editproduct.price,
+      })
+    }
+  }
+
   handleimgInput = (value) => {
     this.setState({
       imgInput: value,
@@ -31,24 +41,36 @@ export default class Form extends Component {
     this.setState({
       imgInput: '',
       productNameInput: '',
-      priceInput: ''
+      priceInput: '',
     })
+    if(this.props.edit) {
+      this.props.clearEdit();
+    }
+    
   }
 
   addToInventory = () => {
     const convertedPrice = parseInt(this.state.priceInput);
-    const product = {
-      name: this.state.productNameInput,
-      price: convertedPrice,
-      img: this.state.imgInput
+      const product = {
+        id: this.props.editproduct.id,
+        name: this.state.productNameInput,
+        price: convertedPrice,
+        img: this.state.imgInput
     }
-    //add inventory to the database
-    Axios.post('/api/products', product)
-    .then( res => {
-      this.props.getProducts()
-    }).catch( err => {
-      console.log(err);
-    })
+
+    if(this.props.edit) {
+      //edit the product.
+      this.props.handleEditProduct(product);
+    } else {
+      //add inventory to the database
+      Axios.post('/api/products', product)
+      .then( res => {
+        this.props.getProducts()
+      }).catch( err => {
+        console.log(err);
+      })
+    }
+
     //clear the form
     this.clearForm();
   }
@@ -79,7 +101,7 @@ export default class Form extends Component {
           </div>
           <div className="btn-container">
             <button className='btn' onClick={this.clearForm}>Cancel</button>
-            <button className='btn form-submit' onClick={this.addToInventory}>Add to Inventory</button>
+            <button className='btn form-submit' onClick={this.addToInventory}>{this.props.edit ? 'Save Changes' : 'Add to Inventory'}</button>
           </div>
         </div>
       </section>
