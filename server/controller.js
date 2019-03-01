@@ -28,6 +28,19 @@ module.exports = {
         });
     },
 
+    getOne: function(req,res,next) {
+        const dbInstance = req.app.get('db');
+        const {id} = req.params;
+
+        dbInstance.get_product(id)
+        .then( product => {
+            res.status(200).send(product);
+        }).catch( err => {
+            console.log(err);
+            res.sendStatus(500);
+        })
+    },
+
     delete: function(req, res, next) {
         const dbInstance = req.app.get('db');
         const {id} = req.params;

@@ -15,11 +15,7 @@ export default function Product(props) {
         </div>
         <div className='product-btn-group'>
           <button className='product-card-btn' onClick={() => {props.delete(props.product.id)}}>Delete</button>
-          <Link to={{
-            pathname:`/edit/${props.product.id}`,
-            state: {product: props.product}
-          }} ><button className='product-card-btn'>Edit</button> </Link>
-          {/* <button className='product-card-btn' onClick={ () => {props.edit(props.product)}}>Edit</button> */}
+          <Link to={`/edit/${props.product.id}`} ><button className='product-card-btn'>Edit</button> </Link>
         </div>
       </div>
     </div> 

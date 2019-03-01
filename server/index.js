@@ -18,6 +18,7 @@ massive(process.env.CONNECTION)
 
 //ENDPOINTS
 app.get('/api/products', prodcutController.getAll);
+app.get('/api/products/:id', prodcutController.getOne);
 app.post('/api/products', prodcutController.create);
 app.delete('/api/products/:id', prodcutController.delete);
 app.put('/api/products/:id', prodcutController.update);

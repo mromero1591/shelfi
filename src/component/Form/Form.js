@@ -17,19 +17,22 @@ export default class Form extends Component {
   }
 
   componentDidMount() {
-    if(this.props.location.state) {
-      const {img_url, name, price} = this.props.location.state.product;
-      this.setState({
-        imgInput: img_url,
-        productNameInput: name,
-        priceInput: price,
-        editStatus: true
+    if(this.props.match.params.id) {
+      Axios.get(`/api/products/${this.props.match.params.id}`)
+      .then( res => {
+        const product = res.data[0];
+        this.setState({
+          imgInput: product.img_url,
+          productNameInput: product.name,
+          priceInput: product.price,
+          editStatus: true
+        })  
       })
     }
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.location !== prevProps.location ) {
+    if(this.props.match.params.id !== prevProps.match.params.id ) {
       this.clearForm();
     }
   }
