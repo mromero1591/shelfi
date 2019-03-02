@@ -1,5 +1,11 @@
 module.exports = {
-    create: function( req, res, next) {
+
+    //Purpose: adds an item to the database
+    //Params: req, data containting the request from the front end.
+    //        res, data being sent back to the frontend.
+    //Return: status, returns a status of what occured.
+    //Outcome: database is upadated to include new product.
+    create: function( req, res) {
         //get the database.
         const dbInstance = req.app.get('db');
         //grab the product info
@@ -15,7 +21,12 @@ module.exports = {
         });
     },
 
-    getAll: function(req, res, next) {
+    //Purpose: gets all the products from the database
+    //Params: req, data containting the request from the front end.
+    //        res, data being sent back to the frontend.
+    //Return: array, contains the products from the database.
+    //Outcome: none.
+    getAll: function(req, res) {
         const dbInstance = req.app.get('db');
 
         //get all the itmes from the database.
@@ -28,6 +39,11 @@ module.exports = {
         });
     },
 
+    //Purpose: gets a products from the database
+    //Params: req, data containting the request from the front end.
+    //        res, data being sent back to the frontend.
+    //Return: array, contains the product from the database.
+    //Outcome: none.
     getOne: function(req,res,next) {
         const dbInstance = req.app.get('db');
         const {id} = req.params;
@@ -41,6 +57,11 @@ module.exports = {
         })
     },
 
+    //Purpose: remove a product from the database
+    //Params: req, data containting the request from the front end.
+    //        res, data being sent back to the frontend.
+    //Return: status, the status of what occured.
+    //Outcome: item has been removed from the database.
     delete: function(req, res, next) {
         const dbInstance = req.app.get('db');
         const {id} = req.params;
@@ -54,6 +75,11 @@ module.exports = {
         })
     },
 
+    //Purpose: Updates a product from the database
+    //Params: req, data containting the request from the front end.
+    //        res, data being sent back to the frontend.
+    //Return: status, the status of what occured.
+    //Outcome: item has been updated in the database.
     update: function(req,res,next) {
         const dbInstance = req.app.get('db');
         const {id} = req.params;

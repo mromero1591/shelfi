@@ -9,6 +9,19 @@
 
 .navbar-logo {
     color: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.logo-img {
+    width: 55px;
+}
+.logo-text {
+    margin-left: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 35px;
 }
 
 .navbar-items {

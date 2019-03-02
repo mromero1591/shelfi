@@ -49,18 +49,15 @@ export default class Dashboard extends Component {
     })
   }
 
-  edit = (product) => {
-    this.props.handleEditProduct(product);
-  }
-
   render() {
+    //loop through each product creating a product card for each.
     const products = this.state.products.map( product => {
       return(
         <div key={product.id} className='product-card'>
           <Product product={product} placeholderImg={this.state.placeholderImg} edit={this.edit} delete={this.deleteProduct}/>
         </div>
       );
-      
+
     })
     return (
       <section className='product-container'>

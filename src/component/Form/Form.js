@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import './Form.css'
+import {Link} from 'react-router-dom';
 import Axios from 'axios';
-
+import './Form.css'
 
 export default class Form extends Component {
   constructor(props) {
@@ -16,6 +16,11 @@ export default class Form extends Component {
     }
   }
 
+
+  //Purpose: When the component mounts if the edit path is matched the product is loaded.
+  //Params: None
+  //Return: None
+  //Outcome: state is updated to contain the products information.
   componentDidMount() {
     if(this.props.match.params.id) {
       Axios.get(`/api/products/${this.props.match.params.id}`)
@@ -31,35 +36,61 @@ export default class Form extends Component {
     }
   }
 
+  //Purpose: Checking the props to see if the add path is matched.
+  //Params: None
+  //Return: None
+  //Outcome: state is cleared to default values.
   componentDidUpdate(prevProps) {
     if(this.props.match.params.id !== prevProps.match.params.id ) {
       this.clearForm();
     }
   }
 
+  //Purpose: tracks image input text
+  //Params: string, the value in the input
+  //Return: None
+  //Outcome: state is updated to match the inputs new value
   handleimgInput = (value) => {
     this.setState({
       imgInput: value,
     });
   }
 
+  //Purpose: tracks image input text
+  //Params: string, the value in the input
+  //Return: None
+  //Outcome: state is updated to match the inputs new value
   handleNameInput = (value) => {
     this.setState({productNameInput: value});
   }
 
+  //Purpose: tracks image input text
+  //Params: string, the value in the input
+  //Return: None
+  //Outcome: state is updated to match the inputs new value
   handlePriceInput = (value) => {
     this.setState({priceInput: value});
   }
 
+
+  //Purpose: set state to defualt values
+  //Params: None
+  //Return: None
+  //Outcome: state is updated to a defualt value.
   clearForm = () => {
     this.setState({
       imgInput: '',
       productNameInput: '',
       priceInput: '',
       editStatus: false
-    })    
+    })
+
   }
 
+  //Purpose: add item to the database
+  //Params: None
+  //Return: None
+  //Outcome: database is upadated to include new product.
   addToInventory = () => {
     const convertedPrice = parseInt(this.state.priceInput);
       const product = {
@@ -78,6 +109,10 @@ export default class Form extends Component {
     })
   }
 
+  //Purpose: edit an item in the database
+  //Params: None
+  //Return: None
+  //Outcome: database is upadated to include new products info.
   editInventory = () => {
     const id = this.props.match.params.id;
 
@@ -123,7 +158,7 @@ export default class Form extends Component {
             </div>
           </div>
           <div className="btn-container">
-            <button className='btn' onClick={this.clearForm}>Cancel</button>
+            <Link to={'/'}><button className='btn' onClick={this.clearForm}>Cancel</button></Link>
             <button className='btn form-submit' onClick={this.state.editStatus ? this.editInventory : this.addToInventory}>{this.state.editStatus ? 'Save Changes' : 'Add to Inventory'}</button>
           </div>
         </div>
