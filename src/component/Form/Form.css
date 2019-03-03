@@ -16,6 +16,7 @@
 .form-img {
     margin-top: 10px;
     align-self: center;
+    max-width: 500px;
 }
 
 .form-img>img {

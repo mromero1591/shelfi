@@ -12,7 +12,8 @@ export default class Form extends Component {
       imgInput: '',
       productNameInput: '',
       priceInput: '',
-      editStatus: false
+      editStatus: false,
+      validImg: false
     }
   }
 
@@ -30,7 +31,8 @@ export default class Form extends Component {
           imgInput: product.img_url,
           productNameInput: product.name,
           priceInput: product.price,
-          editStatus: true
+          editStatus: true,
+          validImg: true
         })  
       })
     }
@@ -51,9 +53,20 @@ export default class Form extends Component {
   //Return: None
   //Outcome: state is updated to match the inputs new value
   handleimgInput = (value) => {
-    this.setState({
-      imgInput: value,
-    });
+    var img = new Image();
+    img.onload = () => {
+      this.setState({ 
+        imgInput: value, 
+        validImg: true 
+      });
+    };
+    img.onerror = () => {
+      this.setState({
+         imgInput: '', 
+         validImg: false 
+      });
+    };
+    img.src = value;
   }
 
   //Purpose: tracks image input text
@@ -134,7 +147,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const formImg = this.state.imgInput !== '' ? this.state.imgInput : this.state.placeholderImg;
+    const formImg = this.state.validImg ? this.state.imgInput : this.state.placeholderImg;
     return (
       <section className='form-section'>
         <div className="form">
