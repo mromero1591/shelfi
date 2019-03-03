@@ -1,0 +1,1 @@
+CREATE TABLE products (id SERIAL, name VARCHAR(200) NOT NULL, price INTEGER, img_url VARCHAR(500))
